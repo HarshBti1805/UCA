@@ -1,5 +1,4 @@
 import java.util.*;
-
 class PriorityQueue<T extends Comparable<T>> {
     private ArrayList<T> heap;
 
@@ -94,7 +93,7 @@ public class Main {
         // Integer PQ (Min-Heap)
         PriorityQueue<Integer> intPQ = new PriorityQueue<>();
         intPQ.add(5);
-        intPQ.add(1);
+        intPQ.add(1');
         intPQ.add(3);
 
         System.out.println("Integer PQ:");
