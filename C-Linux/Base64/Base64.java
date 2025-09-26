@@ -7,7 +7,7 @@ public class Base64 {
     }
 
     public static String encode(byte[] data) {
-        StringBuilder res = new StringBuilder((data.length + 2) / 3 * 4); // Ensure enoug capacity is allocated
+        StringBuilder res = new StringBuilder((data.length + 2) / 3 * 4); // Ensure enough capacity is allocated
         int i = 0;
         // Since we need 3 bytes for every 4 characters :: Get the first 3 bytes in each iteration
         while (i < data.length) {
