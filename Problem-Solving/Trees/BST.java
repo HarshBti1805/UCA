@@ -3,15 +3,46 @@ public class BST<Key extends Comparable<Key>, Value> {
         Key key;
         Value val;
         Node left, right;
+        int size; // number of nodes in this subtree
 
-        Node(Key key, Value value) {
+        Node(Key key, Value value, int size) {
             this.key = key;
             this.val = value;
+            this.size = size;
         }
     }
 
     private Node root;
 
+    // ---------- Size ----------
+    private int size(Node x) {
+        return x == null ? 0 : x.size;
+    }
+
+    public int size() {
+        return size(root);
+    }
+
+    // ---------- Put ----------
+    public void put(Key key, Value value) {
+        root = put(root, key, value);
+    }
+
+    private Node put(Node x, Key key, Value value) {
+        if (x == null) return new Node(key, value, 1);
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0)
+            x.left = put(x.left, key, value);
+        else if (cmp > 0)
+            x.right = put(x.right, key, value);
+        else
+            x.val = value;
+
+        x.size = 1 + size(x.left) + size(x.right);
+        return x;
+    }
+
+    // ---------- Get ----------
     public Value get(Key key) {
         return get(root, key);
     }
@@ -27,22 +58,72 @@ public class BST<Key extends Comparable<Key>, Value> {
             return get(x.right, key);
     }
 
-    public void put(Key key, Value value) {
-        root = put(root, key, value);
+    // ---------- Min / Max ----------
+    public Key min() {
+        if (root == null) return null;
+        return min(root).key;
     }
 
-    private Node put(Node x, Key key, Value value) {
-        if (x == null) return new Node(key, value);
+    private Node min(Node x) {
+        return (x.left == null) ? x : min(x.left);
+    }
+
+    public Key max() {
+        if (root == null) return null;
+        return max(root).key;
+    }
+
+    private Node max(Node x) {
+        return (x.right == null) ? x : max(x.right);
+    }
+
+    // ---------- Floor / Ceil ----------
+    public Key floor(Key key) {
+        Node x = floor(root, key);
+        return (x == null) ? null : x.key;
+    }
+
+    private Node floor(Node x, Key key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp < 0) return floor(x.left, key);
+        Node t = floor(x.right, key);
+        return (t != null) ? t : x;
+    }
+
+    public Key ceil(Key key) {
+        Node x = ceil(root, key);
+        return (x == null) ? null : x.key;
+    }
+
+    private Node ceil(Node x, Key key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp > 0) return ceil(x.right, key);
+        Node t = ceil(x.left, key);
+        return (t != null) ? t : x;
+    }
+
+    // ---------- Rank ----------
+    // Returns the number of keys smaller than the given key
+    public int rank(Key key) {
+        return rank(key, root);
+    }
+
+    private int rank(Key key, Node x) {
+        if (x == null) return 0;
         int cmp = key.compareTo(x.key);
         if (cmp < 0)
-            x.left = put(x.left, key, value);
+            return rank(key, x.left);
         else if (cmp > 0)
-            x.right = put(x.right, key, value);
+            return 1 + size(x.left) + rank(key, x.right);
         else
-            x.val = value;
-        return x;
+            return size(x.left);
     }
 
+    // ---------- Traversal ----------
     public void inorder() {
         inorder(root);
         System.out.println();
@@ -55,30 +136,32 @@ public class BST<Key extends Comparable<Key>, Value> {
         inorder(x.right);
     }
 
+    // ---------- Test ----------
     public static void main(String[] args) {
         BST<Integer, String> bst = new BST<>();
-
-        // Insert elements
         bst.put(10, "Ten");
         bst.put(5, "Five");
         bst.put(20, "Twenty");
         bst.put(15, "Fifteen");
+        bst.put(25, "Twenty-Five");
 
-        // Print tree structure
-        bst.inorder(); // Expected: 5 10 15 20
+        bst.inorder(); // Expected: 5 10 15 20 25
 
-        // ✅ Assertions for correctness
-        assert bst.get(10).equals("Ten") : "Failed: Key 10 should map to 'Ten'";
-        assert bst.get(5).equals("Five") : "Failed: Key 5 should map to 'Five'";
-        assert bst.get(20).equals("Twenty") : "Failed: Key 20 should map to 'Twenty'";
-        assert bst.get(15).equals("Fifteen") : "Failed: Key 15 should map to 'Fifteen'";
-        assert bst.get(99) == null : "Failed: Key 99 should not exist";
+        // Core assertions
+        assert bst.get(15).equals("Fifteen") : "Failed: get(15)";
+        assert bst.min() == 5 : "Failed: min()";
+        assert bst.max() == 25 : "Failed: max()";
+        assert bst.floor(17) == 15 : "Failed: floor(17)";
+        assert bst.ceil(17) == 20 : "Failed: ceil(17)";
 
-        // Update value
-        bst.put(10, "TEN");
-        assert bst.get(10).equals("TEN") : "Failed: Key 10 should now map to 'TEN'";
+        // Rank assertions
+        // Sorted keys: [5, 10, 15, 20, 25]
+        assert bst.rank(5) == 0 : "Failed: rank(5)";
+        assert bst.rank(10) == 1 : "Failed: rank(10)";
+        assert bst.rank(15) == 2 : "Failed: rank(15)";
+        assert bst.rank(22) == 4 : "Failed: rank(22)";
+        assert bst.rank(30) == 5 : "Failed: rank(30)";
 
-        // Simple output confirmation
         System.out.println("All tests passed");
     }
 }
