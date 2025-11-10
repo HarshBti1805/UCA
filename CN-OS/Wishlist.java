@@ -53,7 +53,7 @@ public class Wishlist {
 
         System.out.println(w.getMaxProduct());
         System.out.println(w.getMinProduct());
-        
+
         w.delList("a");
         w.delList("a");
 

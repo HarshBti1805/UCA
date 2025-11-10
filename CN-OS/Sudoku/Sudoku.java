@@ -11,14 +11,14 @@ public class Sudoku {
                         String col = num + "c" + j;
                         String box = num + "b" + (i / 3) + "-" + (j / 3);
 
-                        if(seen.contains(row) || seen.contains(col) || seen.contains(box)) 
+                        if(seen.contains(row) || seen.contains(col) || seen.contains(box))
                             return false;
 
                         seen.add(row);
                         seen.add(col);
                         seen.add(box);
                     }
-                    
+
                 }
         }
         return true;

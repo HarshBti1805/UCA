@@ -4,11 +4,11 @@ import java.net.*;
 public class TCPServer {
     public static void main(String[] args){
 
-        int port = 5000; // server will listen on this port 
+        int port = 5000; // server will listen on this port
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server is listening on port " + port);
 
-            Socket socket = serverSocket.accept(); 
+            Socket socket = serverSocket.accept();
             System.out.println("Client connected");
 
             // Input & Output streams
@@ -16,7 +16,7 @@ public class TCPServer {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
 
-            // Read message from client 
+            // Read message from client
             String message = in.readLine();
             System.out.println("Client Says : " + message);
 

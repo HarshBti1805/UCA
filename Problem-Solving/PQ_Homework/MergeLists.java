@@ -19,12 +19,12 @@ public class MergeLists {
         ListNode curr = dummy;
 
         while (!pq.isEmpty()) {
-            ListNode smallest = pq.poll(); 
+            ListNode smallest = pq.poll();
             curr.next = smallest;
             curr = curr.next;
 
             if (smallest.next != null) {
-                pq.offer(smallest.next); 
+                pq.offer(smallest.next);
             }
         }
 

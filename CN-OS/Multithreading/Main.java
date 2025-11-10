@@ -29,7 +29,7 @@
 // }
 
 
-// // THREAD CLASS 
+// // THREAD CLASS
 // // MAIN THREAD :: The main thread is the thread that runs the main method of a Java application.
 // public class Main {
 //     public static void main(String[] args) {
@@ -39,7 +39,7 @@
 
 
 
-// // LAMBDA EXPRESSION TO CREATE A THREAD AND HOW TO START A THREAD 
+// // LAMBDA EXPRESSION TO CREATE A THREAD AND HOW TO START A THREAD
 // public class Main {
 //     public static void main(String[] args) {
 //         Thread t1 = new Thread(() -> {
@@ -51,7 +51,7 @@
 
 
 
-// // LAMBDA EXPRESSION TO CREATE A THREAD AND HOW TO START A THREAD 
+// // LAMBDA EXPRESSION TO CREATE A THREAD AND HOW TO START A THREAD
 // public class Main {
 //     public static void main(String[] args) {
 //         Thread t1 = new Thread(() -> {
@@ -166,7 +166,7 @@
 //         for(int i = 0 ; i <= sumUpto ; i++) {
 //             s += i;
 //         }
-        
+
 //         try {
 //             Thread.sleep(1000); // sleep for 1 second
 //         } catch (InterruptedException e) {

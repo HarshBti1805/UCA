@@ -2,9 +2,9 @@ import java.io.*;
 import java.net.*;
 public class TCPClient {
     public static void main(String[] args){
-
-        String hostname = "127.0.0.1"; // server IP     
+        String hostname = "127.0.0.1"; // server IP
         int port = 5000;
+
 
         try (Socket socket = new Socket(hostname, port)) {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -21,10 +21,6 @@ public class TCPClient {
         }
         catch(IOException e) {
             System.out.println("I/O Error : " + e.getMessage());
-        }   
-
-
+        }
     }
-
-
 }
